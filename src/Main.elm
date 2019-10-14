@@ -78,6 +78,7 @@ octOffset = 2
 octs i x = div [ style "width" "100px"
           , style "height" "100px"
           , style "border" "1px solid black"
+          , style "background-color" (if i-(octOffset-1) == 26 then "gray" else "white")
           ] [String.fromInt (if i < octOffset then 0 else i-(octOffset-1)) |> text]
 novOffset = 5
 novs i x = div
