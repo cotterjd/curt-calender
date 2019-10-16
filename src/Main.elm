@@ -37,8 +37,9 @@ view : Model -> Html Msg
 view model =
   div []
       [
-        month "October" 31 (days 2 26)
-      , month "November" 30 (days 5 1)
+        month "October" 31 (days 2 [26])
+      , month "November" 30 (days 5 [1, 21])
+      , month "December" 31 (days 0 [])
       ]
 
 
@@ -60,7 +61,8 @@ days offset dtpDay i x = div
           , style "background-color" (bgColor offset dtpDay i)
           ] [String.fromInt (if i < offset then 0 else i-(offset-1)) |> text]
 
-bgColor offSet openDay index = if index-(offSet-1) == openDay then "gray" else "white"
+match offset i x = x == (i-(offset-1))
+bgColor offset openDays index = if (List.any (match offset index) openDays) then "gray" else "white"
 
 month name numOfDays monthDays = div [] [
         Html.h2 [] [text name]
