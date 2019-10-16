@@ -37,28 +37,12 @@ view : Model -> Html Msg
 view model =
   div []
       [
-        Html.h2 [] [text "September"]
-      , days
-      , div [ style "display" "grid"
-            , style "grid-template-columns" "1fr 1fr 1fr 1fr 1fr 1fr 1fr "
-            ]
-            (List.range 1 30 |> List.indexedMap seps)
-      , Html.h2 [] [text "October"]
-      , days
-      , div [ style "display" "grid"
-            , style "grid-template-columns" "1fr 1fr 1fr 1fr 1fr 1fr 1fr "
-            ]
-            (List.range 1 (31+octOffset) |> List.indexedMap octs)
-      , Html.h2 [] [text "November"]
-      , days
-      , div [ style "display" "grid"
-            , style "grid-template-columns" "1fr 1fr 1fr 1fr 1fr 1fr 1fr "
-            ]
-            (List.range 1 (30+novOffset) |> List.indexedMap novs)
+        month "October" 31 (days 2 26)
+      , month "November" 30 (days 5 1)
       ]
 
 
-days = div [ style "display" "grid"
+weekDays = div [ style "display" "grid"
             , style "grid-template-columns" "1fr 1fr 1fr 1fr 1fr 1fr 1fr "
             ] [
               span [] [text "Sunday"]
@@ -69,21 +53,20 @@ days = div [ style "display" "grid"
             , span [] [text "Friday"]
             , span [] [text "Saturday"]
         ]
--- figure out how to make this a function that takes in the offset
-seps i x = div [ style "width" "100px"
-          , style "height" "100px"
-          , style "border" "1px solid black"
-          ] [String.fromInt (i+1) |> text]
-octOffset = 2
-octs i x = div [ style "width" "100px"
-          , style "height" "100px"
-          , style "border" "1px solid black"
-          , style "background-color" (if i-(octOffset-1) == 26 then "gray" else "white")
-          ] [String.fromInt (if i < octOffset then 0 else i-(octOffset-1)) |> text]
-novOffset = 5
-novs i x = div
+days offset dtpDay i x = div
           [ style "width" "100px"
           , style "height" "100px"
           , style "border" "1px solid black"
-          , style "background-color" (if i-(novOffset-1) == 1 then "gray" else "white")
-          ] [String.fromInt (if i < novOffset then 0 else i-(novOffset-1)) |> text]
+          , style "background-color" (bgColor offset dtpDay i)
+          ] [String.fromInt (if i < offset then 0 else i-(offset-1)) |> text]
+
+bgColor offSet openDay index = if index-(offSet-1) == openDay then "gray" else "white"
+
+month name numOfDays monthDays = div [] [
+        Html.h2 [] [text name]
+      , weekDays
+      , div [ style "display" "grid"
+            , style "grid-template-columns" "1fr 1fr 1fr 1fr 1fr 1fr 1fr "
+            ]
+            (List.range 1 numOfDays |> List.indexedMap monthDays)
+      ]
