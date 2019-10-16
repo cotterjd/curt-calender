@@ -85,5 +85,5 @@ novs i x = div
           [ style "width" "100px"
           , style "height" "100px"
           , style "border" "1px solid black"
-          , style "background-color" (if i-(novOffset-1) == 21 || i-(novOffset-1) == 1 then "gray" else "white")
+          , style "background-color" (if i-(novOffset-1) == 1 then "gray" else "white")
           ] [String.fromInt (if i < novOffset then 0 else i-(novOffset-1)) |> text]
