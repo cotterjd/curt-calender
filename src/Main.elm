@@ -37,9 +37,9 @@ view : Model -> Html Msg
 view model =
   div []
       [
-        month "October" 31 (days 2 [26])
-      , month "November" 30 (days 5 [1, 21])
-      , month "December" 31 (days 0 [])
+        month "October" (31+2) (days 2 [26])
+      , month "November" (30+1) (days 5 [1, 21])
+      , month "December" (31+0) (days 0 [])
       ]
 
 
