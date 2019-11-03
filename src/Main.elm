@@ -37,11 +37,13 @@ view : Model -> Html Msg
 view model =
   div []
       [
-        month "October" (31+2) (days 2 [26])
-      , month "November" (30+1) (days 5 [1, 21])
-      , month "December" (31+0) (days 0 [])
+        calender "November" 30 5 [1, 4]
+      , calender "December" 31 0 []
+      , calender "January" 31 3 []
       ]
 
+
+calender monthName daysInMonth dayMonthStarts hangOutDays = month monthName (daysInMonth+dayMonthStarts) (days dayMonthStarts hangOutDays)
 
 weekDays = div [ style "display" "grid"
             , style "grid-template-columns" "1fr 1fr 1fr 1fr 1fr 1fr 1fr "
