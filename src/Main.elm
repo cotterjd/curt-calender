@@ -36,14 +36,14 @@ update msg model =
 view : Model -> Html Msg
 view model =
   div []
-      [
-        calender "November" 30 5 [1, 4]
-      , calender "December" 31 0 []
-      , calender "January" 31 3 []
+      [ calender "December" 31 0 [11, 12, 15, 27, 28, 29, 30, 31]
+      , calender "January" 31 3 [1]
+      , calender "February" 30 6 []
       ]
 
 
-calender monthName daysInMonth dayMonthStarts hangOutDays = month monthName (daysInMonth+dayMonthStarts) (days dayMonthStarts hangOutDays)
+calender monthName daysInMonth dayMonthStarts hangOutDays =
+  month monthName (daysInMonth+dayMonthStarts) (days dayMonthStarts hangOutDays)
 
 weekDays = div [ style "display" "grid"
             , style "grid-template-columns" "1fr 1fr 1fr 1fr 1fr 1fr 1fr "
@@ -64,7 +64,10 @@ days offset dtpDay i x = div
           ] [String.fromInt (if i < offset then 0 else i-(offset-1)) |> text]
 
 match offset i x = x == (i-(offset-1))
-bgColor offset openDays index = if (List.any (match offset index) openDays) then "gray" else "white"
+bgColor offset openDays index =
+  if (List.any (match offset index) openDays)
+  then "gray"
+  else "white"
 
 month name numOfDays monthDays = div [] [
         Html.h2 [] [text name]
